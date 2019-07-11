@@ -191,3 +191,61 @@ var obj2 = {
 // 获取键值的方式
 obj2.name
 obj2[name]  //对象可以视为特殊的数组
+
+// 属性名必须是一个有效的变量，包含特殊字符必须使用 ''包裹起来
+var obj3 = {
+  'a-b':1
+}
+console.log(obj3['a-b'])  //同时必须使用[]才能取出，
+console.log(obj3.name) //undefined 取不存在的属性 不会报错
+// 由于Object是动态类型可以自由赋值删除
+delete obj3['a-b']
+// 检测对象是否存在某个属性可以使用in 但是属性可能不是某个对象的，而是继承的
+'name' in obj2  // true
+'a' in obj2 // false
+'toString' in obj2 //true
+// 判断某个属性是否是自身拥有的使用
+obj2.hasOwnproperty('name') //true
+obj2.hasOwnproperty('toString') //false
+
+
+// Map 和 Set
+
+// es6 提供了一个新的数据结构 Map
+var m = new Map([['张三',211],['李四',233]])
+m.get('张三')
+m.set('王五', '111') //在二维数组加入新值
+m.set('王五',222) //会覆盖原来的 111
+// 无论表有多大，查询速度都不会变慢，初始化必须接受一个二维数组
+
+// Set和Map一样是key的集合，但是不保存value
+var s = new Set([1,1,1,2,3,5]) //接受一个数组作为参数初始化
+console.log(s) /[1,2,3,5] //不保存相同的key 会被自动过滤
+s.add(6) //添加新的key 
+s.delete(6) //删除
+
+// iterable
+// 由于array可以使用for循环，Map Set不可以
+// 所以提供了新的数据类型 iterable
+// array Map Set都属于iterable类型
+// for of
+var arr = [a,b,c,d,e,f]
+for(var i of arr){
+  console.log(i) // a b c d e f
+}
+
+// 同时解决了for in 的一个问题 只循环元素本身的元素
+arr.name = 'demo'
+
+for(var i in arr){
+  console.log(i) // 1 2 3 4 5 6 name
+}
+
+// 但是最后使用iterable本身 的forEach
+
+arr.forEach(ele,index,array){
+  // ele 当前元素
+  // index  下标
+  // 数组本身
+}
+// 但由于 Set没有索引 索引 ele 和 index 都是元素本身
